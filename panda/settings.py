@@ -14,6 +14,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SETTINGS_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.abspath(os.path.join(SETTINGS_DIR, os.pardir))
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
+STATIC_PATH = os.path.join(PROJECT_PATH, 'static')
+DATABASE_PATH = os.path.join(PROJECT_PATH, 'panda.db')
 
 
 # Quick-start development settings - unsuitable for production
@@ -88,3 +90,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+	STATIC_PATH,
+)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
+
+LOGIN_URL = 'auto_panda/login/'
