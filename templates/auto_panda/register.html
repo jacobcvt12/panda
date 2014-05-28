@@ -1,32 +1,20 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
-
-    <body>
-        <h1>Register with Rango</h1>
-
-        {% if registered %}
-        Rango says: <strong>thank you for registering!</strong>
-        <a href="/auto_panda/">Return to the homepage.</a><br />
-        {% else %}
-        Rango says: <strong>register here!</strong><br />
-
+{% extends 'auto_panda/base.html' %}
+{% block title %}Registration{% endblock %}
+{% block body_block %}
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">REGISTER</h1>
+		{% if registered %}
+		<p class="splash-subhead">
+			Thanks for registering!
+		</p>
+		{% else %}
         <form id="user_form" method="post" action="/auto_panda/register/"
                 enctype="multipart/form-data">
-
-            {% csrf_token %}
-
-            <!-- Display each form. The as_p method wraps each element in a paragraph
-                 (<p>) element. This ensures each element appears on a new line,
-                 making everything look neater. -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-
-            <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit" value="Register" />
-        </form>
-        {% endif %}
-    </body>
-</html>
+			{% csrf_token %}
+			{{ user_form.as_p }}
+			<input type="submit" class="pure-button pure-button-active" name="submit" value="Register" />
+		{% endif %}
+    </div>
+</div>
+{% endblock %}
