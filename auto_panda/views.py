@@ -3,14 +3,17 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.middleware.csrf import get_token
 from auto_panda.forms import UserForm, UserProfileForm
-from ajaxuploader.views import AjaxFileUploader
+
+from auto_panda.models import Document
+from auto_panda.forms import DocumentForm
+
 
 def index(request):
 	context = RequestContext(request)
 	return render_to_response('auto_panda/index.html', {}, context)
 
+	
 def register(request):
 	context = RequestContext(request)
 	registered = False
@@ -39,6 +42,7 @@ def register(request):
 			{'user_form': user_form, 'registered': registered},
 			context)
 
+			
 def user_login(request):
 	context = RequestContext(request)
 	
@@ -60,15 +64,26 @@ def user_login(request):
 	else:
 		return render_to_response('auto_panda/login.html', {}, context)
 		
-# @login_required
-def upload(request):
-	csrf_token = get_token(request)
-	context = RequestContext(request)
-	return render_to_response('auto_panda/upload.html', 
-		{'csrf_token' : csrf_token}, context)
 
-import_uploader = AjaxFileUploader()	
-	
+def upload(request):
+	context = RequestContext(request)
+	if request.method == 'POST':
+		form = DocumentForm(request.POST, request.FILES)
+		if form.is_valid():
+			newdoc = Document(docfile = request.FILES['docfile'])
+			newdoc.save()
+			
+			# return HttpResponseRedirect('/auto_panda/')
+		else:
+			form = DocumentForm()
+			
+		documents = Document.objects.all()
+
+	return render_to_response('auto_panda/upload.html', 
+		{'document' : documents, 'form' : form}, 
+		context)
+
+		
 @login_required
 def user_logout(request):
 	logout(request)

@@ -1,41 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
+<html>
     <head>
-        <script src="{% static js/jquery-2.1.1.min.js" ></script>
-        <script src="{% static js/fileuploader.js" ></script>
-        <link href="{% static css/fileuploader.css" media="screen" rel="stylesheet" type="text/css" />
-        <script>
-            $(function(){
-            var uploader = new qq.FileUploader({
-                action: "{% url "my_ajax_upload" %}",
-                element: $('#file-uploader')[0],
-                multiple: true,
-                onComplete: function(id, fileName, responseJSON) {
-                    if(responseJSON.success) {
-                        alert("success!");
-                    } else {
-                        alert("upload failed!");
-                    }
-                },
-                onAllComplete: function(uploads) {
-                    // uploads is an array of maps
-                    // the maps look like this: {file: FileObject, response: JSONServerResponse}
-                    alert("All complete!");
-                },
-                params: {
-                    'csrf_token': '{{ csrf_token }}',
-                    'csrf_name': 'csrfmiddlewaretoken',
-                    'csrf_xname': 'X-CSRFToken',
-                },
-            });
-            });
-        </script>
+        <meta charset="utf-8">
+        <title>Minimal Django File Upload Example</title>   
     </head>
-<body>
-    <div id="file-uploader">
-		
-        <noscript>          
-            <p>Please enable JavaScript to use file uploader.</p>
-        </noscript>         
-    </div>
-</body>
-</html>
+    <body>
+    <!-- List of uploaded documents -->
+    {% if documents %}
+        <ul>
+        {% for document in documents %}
+            <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No documents.</p>
+    {% endif %}
+
+        <!-- Upload form. Note enctype attribute! -->
+        <form action="{% url list %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+            <p>
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+            </p>
+            <p><input type="submit" value="Upload" /></p>
+        </form>
+    </body>
+</html> 
