@@ -1,11 +1,17 @@
 {% extends 'auto_panda/base.html' %}
 {% block title %}Homepage{% endblock %}
 {% block body_block %}
-<div class="hero-unit">
-	{% if user.is_authenticated %}
-	<h1>Hello {{ user.username }}!</h1>
-	{% else %}
-	<h1>Hello world!</h1>
-	{% endif %}
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">PANDA</h1>
+        <p class="splash-subhead">
+            All your personalization needs automated.
+        </p>
+        <p>
+            <a href="/auto_panda/" class="pure-button pure-button-primary">Get Started</a>
+        </p>
+    </div>
 </div>
+<div class="content-wrapper">
+
 {% endblock %}
