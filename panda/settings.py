@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'auto_panda',
+    'ajaxuploader',
 )
 
 TEMPLATE_DIRS = (

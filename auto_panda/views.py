@@ -3,7 +3,9 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.middleware.csrf import get_token
 from auto_panda.forms import UserForm, UserProfileForm
+from ajaxuploader.views import AjaxFileUploader
 
 def index(request):
 	context = RequestContext(request)
@@ -16,32 +18,25 @@ def register(request):
     # If it's a HTTP POST, we're interested in processing form data.
 	if request.method == 'POST':
 		user_form = UserForm(data=request.POST)
-		profile_form = UserProfileForm(data=request.POST)
+		user_form.fields['username'].help_text = None
 		
-		if user_form.is_valid() and profile_form.is_valid():
+		if user_form.is_valid():
 			user = user_form.save()
 			user.set_password(user.password)
 			user.save()
-
-			profile = profile_form.save(commit=False)
-			profile.user = user
-
-			if 'picture' in request.FILES:
-				profile.picture = request.FILES['picture']		
-
-			profile.save()
+			
 			registered = True
 
 		else:
-			print user_form.errors, profile_form.errors
+			print user_form.errors
 
 	else:
 		user_form = UserForm()
-		profile_form = UserProfileForm()
+		user_form.fields['username'].help_text = None
 
 	return render_to_response(
 			'auto_panda/register.html',
-			{'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
+			{'user_form': user_form, 'registered': registered},
 			context)
 
 def user_login(request):
@@ -65,9 +60,14 @@ def user_login(request):
 	else:
 		return render_to_response('auto_panda/login.html', {}, context)
 		
-@login_required
-def restricted(request):
-	return HttpResponse("Since you're logged in, you can see this text!")
+# @login_required
+def upload(request):
+	csrf_token = get_token(request)
+	context = RequestContext(request)
+	return render_to_response('auto_panda/upload.html', 
+		{'csrf_token' : csrf_token}, context)
+
+import_uploader = AjaxFileUploader()	
 	
 @login_required
 def user_logout(request):

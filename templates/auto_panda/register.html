@@ -8,12 +8,17 @@
 		<p class="splash-subhead">
 			Thanks for registering!
 		</p>
+
 		{% else %}
         <form id="user_form" method="post" action="/auto_panda/register/"
                 enctype="multipart/form-data">
 			{% csrf_token %}
+			<div align = "center">
 			{{ user_form.as_p }}
-			<input type="submit" class="pure-button pure-button-active" name="submit" value="Register" />
+			<br><br>
+			<a href="#" name="submit" class="pure-button pure-button-primary">Register</a>
+			</div>
+			<!-- <input type="submit" class="pure-button pure-button-primary" name="submit" value="Register" /> -->
 		{% endif %}
     </div>
 </div>
