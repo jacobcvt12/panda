@@ -3,8 +3,9 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from auto_panda.forms import UserForm, UserProfileForm
+from django.core.urlresolvers import reverse
 
+from auto_panda.forms import UserForm, UserProfileForm
 from auto_panda.models import Document
 from auto_panda.forms import DocumentForm
 
@@ -65,26 +66,26 @@ def user_login(request):
 		return render_to_response('auto_panda/login.html', {}, context)
 		
 
-def upload(request):
+def list(request):
 	context = RequestContext(request)
 	if request.method == 'POST':
-		form = DocumentForm(request.POST, request.FILES)
-		if form.is_valid():
-			newdoc = Document(docfile = request.FILES['docfile'])
-			newdoc.save()
+            form = DocumentForm(request.POST, request.FILES)
+            if form.is_valid():
+                newdoc = Document(docfile = request.FILES['docfile'])
+                newdoc.save()
 			
-			# return HttpResponseRedirect('/auto_panda/')
-		else:
-			form = DocumentForm()
+                return HttpResponseRedirect(reverse('myproject.myapp.views.list'))
+        else:
+            form = DocumentForm()
 			
-		documents = Document.objects.all()
+        documents = Document.objects.all()
 
-	return render_to_response('auto_panda/upload.html', 
-		{'document' : documents, 'form' : form}, 
-		context)
+	return render_to_response('auto_panda/list.html', 
+            {'document' : documents, 'form' : form}, 
+            context)
 
 		
 @login_required
 def user_logout(request):
-	logout(request)
-	return HttpResponseRedirect('/auto_panda/')
+    logout(request)
+    return HttpResponseRedirect('/auto_panda/')
