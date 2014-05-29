@@ -71,10 +71,12 @@ def list(request):
 	if request.method == 'POST':
             form = DocumentForm(request.POST, request.FILES)
             if form.is_valid():
-                newdoc = Document(docfile = request.FILES['docfile'])
-                newdoc.save()
+				for afile in request.FILES.getlist('docfile'):
+					# print afile.name
+					newdoc = Document(docfile = afile)
+					newdoc.save()
 			
-                return HttpResponseRedirect(reverse('myproject.myapp.views.list'))
+				return HttpResponseRedirect(reverse('auto_panda.views.list'))
         else:
             form = DocumentForm()
 			
