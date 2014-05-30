@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Registration{% endblock %}
+{% block body_block %}
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">REGISTER</h1>
+		{% if registered %}
+		<p class="splash-subhead">
+			Thanks for registering!
+		</p>
+
+		{% else %}
+        <form id="user_form" method="post" action="/register/"
+                enctype="multipart/form-data">
+			{% csrf_token %}
+			<div align = "center">
+			{{ user_form.as_p }}
+			<br><br>
+			<a href="#" name="submit" class="pure-button pure-button-primary">Register</a>
+			</div>
+			<!-- <input type="submit" class="pure-button pure-button-primary" name="submit" value="Register" /> -->
+		{% endif %}
+    </div>
+</div>
+{% endblock %}

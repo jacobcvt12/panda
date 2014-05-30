@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Upload{% endblock %}
+{% block body_block %}
+<style>
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	background: rgb(255, 255, 255);
+	color: rgb(0, 120, 231);
+	font-size: 18px;
+	margin: 10px;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+</style>
+<div class="splash-container">
+    <div class="splash">
+		<h1 class="splash-head">UPLOAD</h1>
+		<form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="fileUpload pure-button">
+				<span>Choose Files</span>
+				<input class="upload" type="file" name="docfile" id="id_docfile" multiple />
+			</div>
+			<br><br>
+			<!-- <input class="submit" type="submit" name="submit" value="Upload" /> -->
+			<div>
+				<style scoped>
+					.button-submit {
+						color: rgb(0, 120, 231);
+						font-size: 20px;
+						background: white;
+					}
+				</style>
+				<button type="submit" class="button-submit pure-button">Upload</button>
+			</div>
+		</form>
+    </div>
+</div>
+{% endblock %}

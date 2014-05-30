@@ -1,4 +1,4 @@
-{% extends 'auto_panda/base.html' %}
+{% extends 'base.html' %}
 {% block title %}Registration{% endblock %}
 {% block body_block %}
 <div class="splash-container">
@@ -10,7 +10,7 @@
 		</p>
 
 		{% else %}
-        <form id="user_form" method="post" action="/auto_panda/register/"
+        <form id="user_form" method="post" action="/register/"
                 enctype="multipart/form-data">
 			{% csrf_token %}
 			<div align = "center">

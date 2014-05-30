@@ -19,15 +19,15 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="/auto_panda/">PANDA</a>
+        <a class="pure-menu-heading" href="/">PANDA</a>
 
         <ul>
 			{% if user.is_authenticated %}
             <li><font color="white">Welcome, {{ user.username }}!</font></li>
-            <li><a href="/auto_panda/logout/">Logout</a></li>
+            <li><a href="/logout/">Logout</a></li>
 			{% else %}
-			<!-- <li><a href="/auto_panda/register/">Register</a></li> -->
-			<form id="login_form" method="post" action="/auto_panda/login/">
+			<!-- <li><a href="/register/">Register</a></li> -->
+			<form id="login_form" method="post" action="/login/">
 			{% csrf_token %}
 			<input name="username" type="text" placeholder="Username" autofocus="autofocus">
 			<input name="password" type="password" placeholder="Password">
@@ -45,7 +45,7 @@
 		<div class="pure-g">
 			<div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
 				<h3 class="content-subhead">
-					<a href="/auto_panda/upload/">Upload data</a>
+					<a href="/upload/">Upload data</a>
 				</h3>
 				<p>
 					Use a form to upload your extracts and other data
@@ -53,7 +53,7 @@
 			</div>
 			<div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
 				<h3 class="content-subhead">
-					<a href="/auto_panda/">Run queries</a>
+					<a href="/">Run queries</a>
 				</h3>
 				<p>
 					Let PANDA eat your data/run your queries...
@@ -61,7 +61,7 @@
 			</div>
 			<div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
 				<h3 class="content-subhead">
-					<a href="/auto_panda/">View data</a>
+					<a href="/">View data</a>
 				</h3>
 				<p>
 					Use a table viewer to view your data
@@ -69,7 +69,7 @@
 			</div>
 			<div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
 				<h3 class="content-subhead">
-					<a href="/auto_panda/">Visualize data</a>
+					<a href="/">Visualize data</a>
 				</h3>
 				<p>
 					Under construction...
@@ -83,7 +83,7 @@
             <h2 class="content-head content-head-ribbon">Register.</h2>
 
             <p>
-                Not a member? <a href="/auto_panda/register/">Sign up!</a>
+                Not a member? <a href="/register/">Sign up!</a>
             </p>
         </div>
     </div>
