@@ -12,7 +12,23 @@ from auto_panda.forms import DocumentForm
 
 def index(request):
 	context = RequestContext(request)
-	return render_to_response('auto_panda/index.html', {}, context)
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		
+		if user:
+			if user.is_active:
+				login(request, user)
+				return HttpResponseRedirect('/auto_panda/')
+			else:
+				return HttpResponse("Your account is disabled.")
+		else:
+			print "Invalid login details: {0}, {1}".format(username, password)
+			return HttpResponse("Invalid login details supplied.")
+				
+	else:
+		return render_to_response('auto_panda/index.html', {}, context)
 
 	
 def register(request):
@@ -65,24 +81,25 @@ def user_login(request):
 	else:
 		return render_to_response('auto_panda/login.html', {}, context)
 		
-
-def list(request):
+		
+@login_required
+def upload(request):
 	context = RequestContext(request)
 	if request.method == 'POST':
             form = DocumentForm(request.POST, request.FILES)
             if form.is_valid():
 				for afile in request.FILES.getlist('docfile'):
-					# print afile.name
+					print afile.name
 					newdoc = Document(docfile = afile)
 					newdoc.save()
 			
-				return HttpResponseRedirect(reverse('auto_panda.views.list'))
+				return HttpResponseRedirect(reverse('auto_panda.views.upload'))
         else:
             form = DocumentForm()
 			
         documents = Document.objects.all()
 
-	return render_to_response('auto_panda/list.html', 
+	return render_to_response('auto_panda/upload.html', 
             {'document' : documents, 'form' : form}, 
             context)
 
