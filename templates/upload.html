@@ -32,7 +32,6 @@
 				<input class="upload" type="file" name="docfile" id="id_docfile" multiple />
 			</div>
 			<br><br>
-			<!-- <input class="submit" type="submit" name="submit" value="Upload" /> -->
 			<div>
 				<style scoped>
 					.button-submit {
@@ -44,6 +43,10 @@
 				<button type="submit" class="button-submit pure-button">Upload</button>
 			</div>
 		</form>
+		{% if message %}
+		<br><br>
+		<p><font color="white" size="32">Done!</p>
+		{% endif %}
     </div>
 </div>
 {% endblock %}

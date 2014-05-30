@@ -13,4 +13,5 @@ urlpatterns = patterns('',
 	url(r'^login/$', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^upload/$', views.upload, name='upload'),
+	url(r'^query/$', views.run_query, name='query'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Upload{% endblock %}
+{% block body_block %}
+<div class="splash-container">
+    <div class="splash">
+		<h1 class="splash-head">QUERY</h1>
+		<form action="{% url "query" %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div>
+				<style scoped>
+					.button-submit {
+						color: rgb(0, 120, 231);
+						font-size: 20px;
+						background: white;
+					}
+				</style>
+				<button type="submit" class="button-submit pure-button">Run Query</button>
+			</div>
+		</form>
+		{{ message }}
+		{% if message == 1 %}
+		<br><br>
+		<p><font color="white" size="32">Done!</font></p>
+		{% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -10,6 +10,7 @@ from panda.models import Document
 from panda.forms import DocumentForm
 
 from os.path import join, abspath
+from subprocess import Popen
 
 
 def index(request):
@@ -98,7 +99,8 @@ def upload(request):
 					with open(join('files', dir, afile.name), 'wb+') as destination:
 						destination.write(afile.read())
 								
-				return HttpResponseRedirect(reverse('panda.views.upload'))
+				return render_to_response('upload.html', {'message' : 'done'}, context)
+				# return HttpResponseRedirect(reverse('panda.views.upload'))
         else:
             form = DocumentForm()
 			
@@ -107,6 +109,19 @@ def upload(request):
 	return render_to_response('upload.html', 
             {'document' : documents, 'form' : form}, 
             context)
+			
+
+@login_required
+def run_query(request):
+	context = RequestContext(request)
+	print 'message'
+	if request.method == 'POST':
+		program_path = join('scripts', 'main.py')
+		p = Popen('python ' + program_path)
+		exit_code = p.wait()
+        return render_to_response('query.html', {'message' : 256}, context)
+	
+	return render_to_response('query.html', {'message' : 0}, context)
 
 		
 @login_required

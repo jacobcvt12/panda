@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS Visits_to_all_Personalized_Pages (
+Date TEXT UNIQUE, 
+MRLP_VISIT INTEGER,
+MYA_Overview_Visit INTEGER, 
+MRLP_and_MYA_Overview INTEGER, 
+Earn_No_MRLP_MYA INTEGER, 
+Use_No_MRLP_MYA INTEGER, 
+Trip_Planner_No_MRLP_MYA INTEGER, 
+Deals_No_MRLP_MYA_Use INTEGER
+);

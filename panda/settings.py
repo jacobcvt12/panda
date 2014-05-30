@@ -97,4 +97,4 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
-LOGIN_URL = '/auto_panda/'
+LOGIN_URL = '/'
