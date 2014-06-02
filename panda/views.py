@@ -122,6 +122,16 @@ def run_query(request):
         return render_to_response('query.html', {'message' : 256}, context)
 	
 	return render_to_response('query.html', {'message' : 0}, context)
+	
+
+@login_required
+def view_data(request):
+	context = RequestContext(request)
+	if request.method == 'POST':
+		# user selected the table they want to view (and subsetted)
+		pass
+	
+	return render_to_response('view_data.html', {}, context)
 
 		
 @login_required
